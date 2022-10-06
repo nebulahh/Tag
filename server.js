@@ -12,7 +12,7 @@ const connectDB = require("./config/db");
 const mainRoutes = require("./routes/main");
 const postRoutes = require("./routes/posts");
 const commentRoutes = require("./routes/comments");
-const PORT = process.env.PORT || 2121;
+
 
 dotenv.config({path: './config/.env'})
 
@@ -56,6 +56,6 @@ app.use("/", mainRoutes);
 app.use("/post", postRoutes);
 app.use("/comment", commentRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server is running at ${PORT}, you better catch it!`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server is running at ${process.env.PORT}, you better catch it!`);
 })
