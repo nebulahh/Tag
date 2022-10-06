@@ -12,7 +12,7 @@ const connectDB = require("./config/db");
 const mainRoutes = require("./routes/main");
 const postRoutes = require("./routes/posts");
 const commentRoutes = require("./routes/comments");
-const PORT = process.env.PORT || 2121
+const PORT = process.env.PORT || 2121;
 
 dotenv.config({path: './config/.env'})
 
