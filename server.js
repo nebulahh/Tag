@@ -55,6 +55,6 @@ app.use("/", mainRoutes);
 app.use("/post", postRoutes);
 app.use("/comment", commentRoutes);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT || 2121, () => {
   console.log(`Server is running at ${process.env.PORT}, you better catch it!`);
 })
