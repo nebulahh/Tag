@@ -1,0 +1,120 @@
+<%- include('partials/postHeader') -%>
+<div class="container">
+
+
+<section class="hero">
+ <div class="container">
+
+  
+  <div class="row">	
+
+<div class="col-lg-6 offset-lg-3">
+
+<div class="cardbox shadow-lg bg-white">
+
+<div class="cardbox-heading">
+
+<div class="media m-0">
+ <div class="d-flex mr-3">
+<a href="/profile">
+  <img class="img-fluid rounded-circle" src="https://randomuser.me/api/portraits/men/11.jpg" alt="User">
+</a>
+ </div>
+ <div class="media-body">
+  <p class="m-0"><%= user.userName %></p>
+
+ </div>
+</div>
+</div>
+
+<div class="cardbox-item">
+<img class="img-fluid" src="<%= post.image%>" alt="Image">
+</div><!--/ cardbox-item -->
+
+  <p style="margin-right: 10px;"><%= post.caption%></p>
+
+<div class="cardbox-base mt-4 row justify-content-around">
+
+  <form
+  class="col-1"
+  action="/post/likePost/<%= post.id %>?_method=PUT"
+  method="POST"
+>
+  <button class="btn btn-primary fa fa-heart" type="submit"></button>
+</form>
+<h3 class="col-3">Likes: <%= post.likes %></h3>
+
+  <%if(post.user == user.id){ %> <!-- Does person who made post = person logged in? Is it the users post? If so, display trash-->
+    <form action="/post/deletePost/<%= post.id %>?_method=DELETE" method="POST" class="col-3 text-center"> 
+      <!-----in the action we are appending the _method=DELETE for METHOD OVERRIDE (same for put)-->
+      <button class="btn btn-primary fa fa-trash" type="submit"></button>
+    </form>
+    <%}%>
+
+</div>
+
+
+<!-- <div > -->
+<div class="mx text-center">
+<form action="/comment/createComment/<%=post._id%>" method="POST"> 
+  <div class="mb-3 w-80 mx">
+      <label for="Comment" class="form-label">Comment</label>
+      <textarea class="form-control height" id="comment" name="comment"></textarea>
+      <!-- <input type="text" class="form-control height" id="comment" name="comment"> -->
+  </div>
+  <button type="submit" class="comment mb-3 btn btn-primary" >Submit</button>
+</form>
+</div>
+
+<!-- </div> -->
+<ul>
+  <!--TODO Add: username and delete button -->
+  <% for(var i=0; i<comments.length; i++) {%>
+    <li class="list col-6 justify-content-between mt-5">
+     
+      <div class="col-sm-5 col-md-6 col-12 pb-4">
+      <h1>Comments</h1>
+      <div class="comment mt-4 text-justify">
+          <!-- <img src="https://i.imgur.com/yTFUilP.jpg" alt="" class="rounded-circle" width="40" height="40"> -->
+          <h4 style="color: black;"><%= comments[i].createdBy%>:</h4>
+          <span>- <%= comments[i].createdAt%> </span>
+          <br>
+          <p style="color: black;"><%= comments[i].comment%></p>
+      </div>
+    
+  </div>
+     
+<div class="d-flex g-4">
+        <!-- adding comment likes -->
+        <form class="col-1" action="/comment/likeComment/<%= comments[i]._id %>?_method=PUT" method="POST">
+          <button class="btn btn-primary fa fa-heart" type="submit"></button>
+        </form>
+        <h6 class="col-3">Likes: <%= comments[i].likes %></h6>
+        <!-- adding comment likes above -->
+        <!-- adding comment deletes below -->
+        <%if(comments[i].createdById == user.id){ %>
+        <form action="/comment/deleteComment/<%= comments[i]._id %>?_method=DELETE" method="POST" > 
+          <button class="btn btn-outline-danger" type="submit">Delete</button>
+        </form>
+        <%}%>
+        <!-- adding comment deletes above -->
+</div>
+    </li>
+  <% } %>
+</ul>
+	  
+  
+</div>
+
+   </div>
+
+
+  </div>
+ </div>
+</section>
+  </div>
+  
+<%- include('partials/footer') -%>
+
+
+<!--  -->
