@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
   image: {
     type: String,
     require: false,
@@ -28,6 +24,10 @@ const PostSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User", //here we are referencing our "User" model from our User schema
+  },
+  userName: {
+    type: String,
+    required: true,
   },
   createdAt: {
     type: Date,
