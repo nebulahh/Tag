@@ -1,37 +1,51 @@
 <%- include('partials/feedHeader') -%>
+<% for(var i=0; i<posts.length; i++) {%>
+<div class="d-flex p-3 border-bottom">
+  <div class="d-flex mx-auto w-50 ps-3">
+    <div>
+      <a href="/profile">
+        <h6 class="text-body">
+          <%=  posts[i].userName %> 
+          
+          <span class="small text-muted font-weight-normal"> • </span>
+          <span class="small text-muted font-weight-normal">7h</span>
 
-  <div class="container">
-    <div class="row justify-content-center mt-5">
-      <ul class="row list-unstyled">
-        <% for(var i=0; i<posts.length; i++) {%>
-          <li class="col-6 justify-content-between mt-5">
-            <a href="/post/<%= posts[i]._id%>">
-              
-
-            <div id="container">
-              <div class="card">
-                <a href="/post/<%= posts[i]._id%>">
-                  <img class="img-fluid" src="<%= posts[i].image%>" alt="user-image">
-                  </a>
-  
-                <div class="card__details">
-                  <p> 
-                    <i class="fa-solid fa-heart"></i>
-                    <%= posts[i].likes %> 
-                  </p>
-                  <div class="name"><%= posts[i].title %> </div>
-                  <p> <%= posts[i].location %></p>
-                </div>
-
-              </div>
-            </div>
-
-              
-            </a>
-          </li>
+        </h6>
+      </a>
+     <a href="/post/<%= posts[i]._id%>">
+      <p style="line-height: 1.2;">
+        <%= posts[i].caption %>
+      </p>
+      <% if (posts[i].image != null) { %>
+        <img class="img-fluid rounded mb-3" src="<%= posts[i].image%>">
         <% } %>
-        </ul>
+
+   
+     </a>
+     
+     
+        
+         
+      <ul class="list-unstyled d-flex justify-content-between mb-0 pe-xl-5">
+        <li>
+          <a href="/post/<%= posts[i]._id%>">
+            <i class="far fa-comment"></i></a>  
+        </li>
+        <li>
+          <!-- <form
+          action="/post/likePost/?_method=PUT"
+          method="POST"
+        >
+          <button type="submit">
+            <i class="far fa-heart"></i><span class="small ps-2">  </span>
+          </button>
+        </form> -->
+        </li>
+      </ul>
     </div>
-  </div>  
+  </div>
+</div>
+<% } %>
+
 
 <%- include('partials/footer') -%>
