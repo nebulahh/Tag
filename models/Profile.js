@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const ProfileSchema = new mongoose.Schema({
+const PostSchema = new mongoose.Schema({
   profilePic: {
     type: String,
     require: false,
@@ -19,4 +19,4 @@ const ProfileSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("Post", PostSchema);
+module.exports = mongoose.model("Post", ProfileSchema);

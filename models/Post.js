@@ -13,10 +13,6 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  location: {
-    type: String,
-    required: true,
-  },
   likes: {
     type: Number,
     required: true,
@@ -29,6 +25,10 @@ const PostSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  // likedBy: {
+  //   type: Array,
+  //   required: true,
+  // },
   createdAt: {
     type: Date,
     default: Date.now,
