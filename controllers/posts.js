@@ -1,6 +1,7 @@
 const Post = require("../models/Post");
 const cloudinary = require("../middleware/cloudinary");
 const Comment = require("../models/Comment");
+// const User = require('../models/Profile')
 
 module.exports = {
   getCreatePostPage: async (req, res) => {
@@ -22,6 +23,7 @@ module.exports = {
   getFeed: async (req, res) => {
     try {
       const posts = await Post.find().sort({ createdAt: "desc" }).lean(); //Post is the model (required above), .lean() ()is mongoose) is for getting the raw object from mongo (documents on mongo, while similar to "objects" actually include more than you need) this will be faster
+      console.log(posts);
       res.render("feed.ejs", { posts: posts });
   
     } catch (err) {
@@ -44,10 +46,10 @@ module.exports = {
         image: result.secure_url, //result declared above
         cloudinaryId: result.public_id,
         caption: req.body.caption,
-        location: req.body.location,
         likes: 0,
         user: req.user.id,
         userName: req.user.userName,
+       
       });
       console.log("Post has been added!");
       res.redirect("/getCreatePostPage");
@@ -58,7 +60,7 @@ module.exports = {
   getPost: async (req, res) => {
     try {
       const post = await Post.findById(req.params.id); //.id is the variable from the route
-      console.log('get post=', post)
+      console.log('get post=', req)
       const comments = await Comment.find({post: req.params.id}).sort({ createdAt: "asc" }).lean();
       res.render("post.ejs", { post: post, user: req.user, comments: comments });
       // res.render("post.ejs", { post: post, user: req.user});
@@ -73,8 +75,11 @@ module.exports = {
         { _id: req.params.id },
         {
           $inc: { likes: 1 }, //$inc is a increment thing included with mongo/mongoose. This is a number because it is defined in the schema as such
+      // create an interface that adds the username of the person that like the post to an array. so that they cant like the post twice.
         }
       );
+
+      // await Post.findOneAndUpdate({ _id: req.params.id }, { $inc: { likes: 1 }, })
       console.log("Likes +1");
       res.redirect(`/post/${req.params.id}`);
     } catch (err) {
